@@ -1,0 +1,103 @@
+@charset "UTF-8";
+@import
+	url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+body {
+	margin: 0px;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 1em;
+	font-weight: 400px;
+	font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+	color: #4682B4;
+}
+
+.layout {
+	height: 100%;
+	background-color: DCDCDC;
+}
+
+.layoutDentro {
+	width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
+	margin-top: 15px;
+	text-align: center;
+}
+
+.layoutDentro table {
+    margin: 0 auto;
+}
+
+.Botao1 {
+	text-decoration: none;
+	background-color: #4682B4;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700px;
+	border-radius: 5px;
+	border: 0px;
+	cursor: pointer;
+}
+
+.BotaoExcluir {
+	text-decoration: none;
+	background-color: #d51213;
+	padding: 5px 10px 5px 10px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700px;
+	border-radius: 5px;
+}
+
+.Caixa1 {
+	width: 200px;
+	padding: 5px;
+	margin-bottom: 10px;
+	border: 1px solid #4682B4;
+	border-radius: 5px;
+}
+
+.Caixa2 {
+	width: 200px;
+	padding: 5px;
+	margin-bottom: 10px;
+	border: 1px solid #4682B4;
+	border-radius: 5px;
+}
+
+.CaixaID {
+	width: 200px;
+	padding: 5px;
+	margin-bottom: 10px;
+	border: 1px solid #ff0000;
+}
+
+#tabela {
+	margin-top: 60px;
+	border-collapse: collapse;
+	margin-left: 5%;
+}
+
+#tabela th {
+	border: 1px solid #ddd;
+	padding: 10px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background-color: #4682B4;
+	color: #fff;
+	background-color: #4682B4;
+	margin: auto;
+}
+
+#tabela td {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.Contato {
+	margin: auto;
+}
