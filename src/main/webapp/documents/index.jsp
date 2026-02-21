@@ -1,3 +1,4 @@
+<%@page import="processadorRequisicao.PRProduto"%>
 <%@ page import="processadorRequisicao.PRCliente"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -15,7 +16,7 @@
 			<img src="../imagens/iconePedido.png">
 			<h1>Gerenciador de Pedidos</h1>
 			<a href="${pageContext.request.contextPath}/<%=PRCliente.NM_SERVLET_EXIBIR_CLIENTES%>" class="Botao1">Exibir Clientes</a>
-			<a class="Botao1">Exibir Produtos</a>
+			<a href="${pageContext.request.contextPath}/<%=PRProduto.NM_SERVLET_EXIBIR_PRODUTOS%>" class="Botao1">Exibir Produtos</a>
 			<a class="Botao1">Exibir Pedidos</a>
 		</div>
 	</div>

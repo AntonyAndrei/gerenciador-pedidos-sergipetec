@@ -79,7 +79,8 @@ h1 {
 #tabela {
 	margin-top: 60px;
 	border-collapse: collapse;
-	margin-left: 5%;
+	margin-left: auto;
+    margin-right: auto;
 }
 
 #tabela th {
@@ -100,4 +101,8 @@ h1 {
 
 .Contato {
 	margin: auto;
+}
+
+.Botao1, .BotaoExcluir {
+    margin: 2px;
 }

@@ -1,3 +1,4 @@
+<%@page import="beans.ClienteBean"%>
 <%@page import="processadorRequisicao.PRCliente"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -16,10 +17,10 @@
 			<form name="frmCliente" action="${pageContext.request.contextPath}/<%=PRCliente.NM_SERVLET_INCLUIR_CLIENTES%>">
 				<table>
 					<tr>
-						<td><input type="text" name="nomeCliente" placeholder="Nome do cliente" class="Caixa1">*</td>
+						<td><input type="text" name="<%=ClienteBean.NM_COL_Nome %>" placeholder="Nome do cliente" class="Caixa1">*</td>
 					</tr>
 					<tr>
-						<td><input type="text" name="emailCliente" placeholder="E-mail do cliente" class="Caixa1"></td>				
+						<td><input type="text" name="<%=ClienteBean.NM_COL_Email %>" placeholder="E-mail do cliente" class="Caixa1"></td>				
 					</tr>
 				</table>
 				<input type="button" value="Adicionar" class="Botao1" onclick="validarCliente()">

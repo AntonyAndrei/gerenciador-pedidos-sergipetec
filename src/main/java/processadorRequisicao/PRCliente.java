@@ -41,8 +41,8 @@ public class PRCliente {
 		// cria objeto do cliente
 		ClienteBean cliente = new ClienteBean();
 		// seta as variáveis
-		cliente.setNome(request.getParameter("nomeCliente"));
-		cliente.setEmail(request.getParameter("emailCliente"));
+		cliente.setNome(request.getParameter(ClienteBean.NM_COL_Nome));
+		cliente.setEmail(request.getParameter(ClienteBean.NM_COL_Email));
 		// seta a data do cadastro com a data de hoje
 		cliente.setDtCadastro(LocalDate.now());
 		// chama o DAO para incluir no banco de dados
