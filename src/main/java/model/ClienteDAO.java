@@ -135,4 +135,40 @@ public class ClienteDAO extends DAO {
 			System.out.println(e);
 		}
 	}
+	
+	/** CONSULTAR CLIENTE POR NOME OU ID **/
+	public ArrayList<ClienteBean> consultarClientePorNomeId(String pFiltro) {
+		// Busca por ID ou nome que contenha o texto
+		final String sql = "SELECT * FROM CLIENTES WHERE " + ClienteBean.NM_COL_IdCliente + " = ? " 
+					+ " OR " + ClienteBean.NM_COL_Nome + " LIKE ? " 
+					+ " ORDER BY " + ClienteBean.NM_COL_Nome;
+		ArrayList<ClienteBean> listaClientes = new ArrayList<>();
+		try {
+			// Abre conexão com o banco
+			Connection conexao = conectar();
+			// Prepara a query para execução no BD
+			PreparedStatement preStmt = conexao.prepareStatement(sql);
+			// Substitui parâmetros "?"
+			preStmt.setString(1, pFiltro);
+			preStmt.setString(2, "%" + pFiltro + "%");
+			// Executa a query e armazena o resultado 
+			ResultSet rs = preStmt.executeQuery();
+			// laço While executado enquanto houver clientes para converter os dados num objeto e coloca-los na lista
+			while (rs.next()) {
+				String idCliente     = rs.getString(1);
+				String nome          = rs.getString(2);
+				String email         = rs.getString(3);
+				LocalDate dtCadastro = rs.getDate(4).toLocalDate();
+				
+				ClienteBean clienteAtual = new ClienteBean(idCliente, nome, email, dtCadastro);
+				listaClientes.add(clienteAtual);
+			}
+			// Encerra a conexão com o BD
+			conexao.close();
+			return listaClientes;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
 }

@@ -5,7 +5,7 @@
 <%@ page import="processadorRequisicao.PRCliente"%>
 
 <%
-	ArrayList<ClienteBean> listaClientes = (ArrayList<ClienteBean>) request.getAttribute("listaClientes");
+	ArrayList<ClienteBean> listaClientes = (ArrayList<ClienteBean>) request.getAttribute(PRCliente.NM_ARRAY_CLIENTE);
 %>
 
 <!DOCTYPE html>
@@ -20,6 +20,11 @@
 <div class="layout">
 	<div class="layoutDentro">
 		<h1>Listar Clientes</h1>
+		<form action="<%=PRCliente.NM_SERVLET_CONSULTAR_CLIENTE_PARAMETRO%>" >
+			<input type="text" name="<%=PRCliente.NM_FILTRO_CLIENTE %>" placeholder="Digite nome ou ID" class="Caixa1" width="300">
+			<input type="submit" value="Pesquisar" class="Botao1">
+			<a href="<%=PRCliente.NM_SERVLET_EXIBIR_CLIENTES%>" class="BotaoLimpar">Limpar</a>
+		</form>
 		<table id="tabela">
 			<thead>
 				<tr>

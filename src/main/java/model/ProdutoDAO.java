@@ -140,4 +140,42 @@ public class ProdutoDAO extends DAO {
 			System.out.println(e);
 		}
 	}
+	
+	/** CONSULTAR PRODUTO POR DESCRICAO OU ID **/
+	public ArrayList<ProdutoBean> consultarProdutoPorDescricaoId(String pFiltro) {
+		// Busca por ID ou descricao que contenha o texto
+		final String sql = "SELECT * FROM PRODUTOS WHERE " + ProdutoBean.NM_COL_IdProduto + " = ? " 
+					+ " OR " + ProdutoBean.NM_COL_Descricao + " LIKE ? " 
+					+ " ORDER BY " + ProdutoBean.NM_COL_Descricao;
+		ArrayList<ProdutoBean> listaProdutos = new ArrayList<>();
+		try {
+			// Abre conexão com o banco
+			Connection conexao = conectar();
+			// Prepara a query para execução no BD
+			PreparedStatement preStmt = conexao.prepareStatement(sql);
+			// Substitui parâmetros "?"
+			preStmt.setString(1, pFiltro);
+			preStmt.setString(2, "%" + pFiltro + "%");
+			// Executa a query e armazena o resultado 
+			ResultSet rs = preStmt.executeQuery();
+			// laço While executado enquanto houver produtos para converter os dados num objeto e coloca-los na lista
+			while (rs.next()) {
+				int idProduto        = rs.getInt(1);
+				String descricao     = rs.getString(2);
+				double valor         = rs.getDouble(3);
+				int quantidade       = rs.getInt(4);
+				LocalDate dtCadastro = rs.getDate(5).toLocalDate();
+				
+				ProdutoBean produtoAtual = new ProdutoBean(idProduto, descricao, valor, quantidade, dtCadastro);
+				// Popula a lista
+				listaProdutos.add(produtoAtual);
+			}
+			// Encerra a conexão com o BD
+			conexao.close();
+			return listaProdutos;
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
 }

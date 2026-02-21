@@ -21,6 +21,10 @@ public class PRCliente {
 	public static final String NM_SERVLET_ALTERAR_CLIENTES = "alterarCliente";
 	public static final String NM_SERVLET_PROCESSAR_ATUALIZAR_CLIENTE = "processarAlterarCliente";
 	public static final String NM_SERVLET_EXCLUIR_CLIENTE = "excluirCliente";
+	public static final String NM_SERVLET_CONSULTAR_CLIENTE_PARAMETRO = "consultarClienteParametro";
+	
+	public static final String NM_FILTRO_CLIENTE = "filtroCliente";
+	public static final String NM_ARRAY_CLIENTE = "listaClientes";
 
 	public static String NM_JSP_LISTAR  = "/documents/cliente/listarClientes.jsp";
 	public static String NM_JSP_INCLUIR = "/documents/cliente/novoCliente.jsp";
@@ -32,7 +36,7 @@ public class PRCliente {
 		// Criando o objeto que irá receber os dados do clientes
 		ArrayList<ClienteBean> listaClientes = clienteDAO.consultarCliente();
 		// Encaminhar a lista ao documento listarClientes.jsp
-		request.setAttribute("listaClientes", listaClientes);
+		request.setAttribute(NM_ARRAY_CLIENTE, listaClientes);
 		RequestDispatcher rd = request.getRequestDispatcher(NM_JSP_LISTAR);
 		rd.forward(request, response);
 	}
@@ -83,5 +87,23 @@ public class PRCliente {
 		clienteDAO.excluirCliente(cliente);
 		// redireciona para o documento gerenciadorPedidos.jsp
 		response.sendRedirect(NM_SERVLET_EXIBIR_CLIENTES);
+	}
+	
+	// Adicione este método ao final da classe
+	public void consultarClienteParametro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<ClienteBean> listaClientes;
+		//obtém filtro do documento jsp
+		String filtro = request.getParameter(NM_FILTRO_CLIENTE);
+		if (filtro == null || filtro.equals("")) {
+			// Se o filtro estiver vazio, traz todos os registro
+			listaClientes = clienteDAO.consultarCliente();
+		} else {
+			// senão faz consulta passando filtro como parâmetro
+			listaClientes = clienteDAO.consultarClientePorNomeId(filtro);
+		}
+		// Envia o filtro para o documento alterarCliente.jsp
+		request.setAttribute(NM_ARRAY_CLIENTE, listaClientes);
+		RequestDispatcher rd = request.getRequestDispatcher(NM_JSP_LISTAR);
+		rd.forward(request, response);
 	}
 }

@@ -18,12 +18,14 @@ import processadorRequisicao.PRProduto;
 		"/" + PRCliente.NM_SERVLET_ALTERAR_CLIENTES,
 		"/" + PRCliente.NM_SERVLET_PROCESSAR_ATUALIZAR_CLIENTE,
 		"/" + PRCliente.NM_SERVLET_EXCLUIR_CLIENTE,
+		"/" + PRCliente.NM_SERVLET_CONSULTAR_CLIENTE_PARAMETRO,
 		// **************** SERVLETS PRODUTOS ***********************/
 		"/" + PRProduto.NM_SERVLET_EXIBIR_PRODUTOS,
 		"/" + PRProduto.NM_SERVLET_INCLUIR_PRODUTOS,
 		"/" + PRProduto.NM_SERVLET_ALTERAR_PRODUTOS,
 		"/" + PRProduto.NM_SERVLET_PROCESSAR_ATUALIZAR_PRODUTO,
-		"/" + PRProduto.NM_SERVLET_EXCLUIR_PRODUTO
+		"/" + PRProduto.NM_SERVLET_EXCLUIR_PRODUTO,
+		"/" + PRProduto.NM_SERVLET_CONSULTAR_PRODUTO_PARAMETRO
 		})
 public class Controlador extends HttpServlet {
 	/**
@@ -61,6 +63,10 @@ public class Controlador extends HttpServlet {
 			aPRCliente.processarExcluirCliente(request, response);
 		}
 		
+		if (action.equals("/" + PRCliente.NM_SERVLET_CONSULTAR_CLIENTE_PARAMETRO)) {
+		    aPRCliente.consultarClienteParametro(request, response);
+		}
+		
 		// **************** SERVLETS PRODUTOS ***********************/
 		if (action.equals("/" + PRProduto.NM_SERVLET_EXIBIR_PRODUTOS)) {
 			aPRProduto.exibirProdutos(request, response);
@@ -80,6 +86,10 @@ public class Controlador extends HttpServlet {
 		
 		if (action.equals("/" + PRProduto.NM_SERVLET_EXCLUIR_PRODUTO)) {
 			aPRProduto.processarExcluirProduto(request, response);
+		}
+		
+		if (action.equals("/" + PRProduto.NM_SERVLET_CONSULTAR_PRODUTO_PARAMETRO)) {
+			aPRProduto.consultarProdutoParametro(request, response);
 		}
 	}
 }

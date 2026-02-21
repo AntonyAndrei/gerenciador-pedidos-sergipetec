@@ -20,6 +20,10 @@ public class PRProduto {
 	public static final String NM_SERVLET_ALTERAR_PRODUTOS = "alterarProduto";
 	public static final String NM_SERVLET_PROCESSAR_ATUALIZAR_PRODUTO = "processarAlterarProduto";
 	public static final String NM_SERVLET_EXCLUIR_PRODUTO = "excluirProduto";
+	public static final String NM_SERVLET_CONSULTAR_PRODUTO_PARAMETRO = "consultarProdutoParametro";
+	
+	public static final String NM_FILTRO_PRODUTO = "filtroProduto";
+	public static final String NM_ARRAY_PRODUTO = "listaProdutos";
 
 	public static String NM_JSP_LISTAR  = "/documents/produto/listarProduto.jsp";
 	public static String NM_JSP_INCLUIR = "/documents/produto/novoProduto.jsp";
@@ -31,7 +35,7 @@ public class PRProduto {
 		// Criando o objeto que irá receber os dados do produtos
 		ArrayList<ProdutoBean> listaProdutos = produtoDAO.consultarProduto();
 		// Encaminhar a lista ao documento listarProdutos.jsp
-		request.setAttribute("listaProdutos", listaProdutos);
+		request.setAttribute(NM_ARRAY_PRODUTO, listaProdutos);
 		RequestDispatcher rd = request.getRequestDispatcher(NM_JSP_LISTAR);
 		rd.forward(request, response);
 	}
@@ -84,5 +88,22 @@ public class PRProduto {
 		produtoDAO.excluirProduto(produto);
 		// redireciona para o documento listarProdutos.jsp
 		response.sendRedirect(NM_SERVLET_EXIBIR_PRODUTOS);
+	}
+	
+	public void consultarProdutoParametro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ArrayList<ProdutoBean> listaProdutos;
+		//obtém filtro do documento jsp
+		String filtro = request.getParameter(NM_FILTRO_PRODUTO);
+		if (filtro == null || filtro.equals("")) {
+			// Se o filtro estiver vazio, traz todos os registro
+			listaProdutos = produtoDAO.consultarProduto();
+		} else {
+			// senão faz consulta passando filtro como parâmetro
+			listaProdutos = produtoDAO.consultarProdutoPorDescricaoId(filtro);
+		}
+		// Envia o filtro para o documento listarProdutos.jsp
+		request.setAttribute(NM_ARRAY_PRODUTO, listaProdutos);
+		RequestDispatcher rd = request.getRequestDispatcher(NM_JSP_LISTAR);
+		rd.forward(request, response);
 	}
 }

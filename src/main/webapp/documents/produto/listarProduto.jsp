@@ -5,7 +5,7 @@
 <%@ page import="processadorRequisicao.PRProduto"%>
 
 <%
-	ArrayList<ProdutoBean> listaProdutos = (ArrayList<ProdutoBean>) request.getAttribute("listaProdutos");
+	ArrayList<ProdutoBean> listaProdutos = (ArrayList<ProdutoBean>) request.getAttribute(PRProduto.NM_ARRAY_PRODUTO);
 %>
 
 <!DOCTYPE html>
@@ -20,6 +20,11 @@
 <div class="layout">
 	<div class="layoutDentro">
 		<h1>Listar Produtos</h1>
+		<form action="<%=PRProduto.NM_SERVLET_CONSULTAR_PRODUTO_PARAMETRO%>">
+			<input type="text" name="<%=PRProduto.NM_FILTRO_PRODUTO %>" placeholder="Digite descrição ou ID" class="Caixa1" width="300">
+			<input type="submit" value="Pesquisar" class="Botao1">
+			<a href="<%=PRProduto.NM_SERVLET_EXIBIR_PRODUTOS%>" class="BotaoLimpar">Limpar</a>
+		</form>
 		<table id="tabela">
 			<thead>
 				<tr>
