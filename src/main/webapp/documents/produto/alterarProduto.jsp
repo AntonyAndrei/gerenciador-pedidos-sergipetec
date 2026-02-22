@@ -47,6 +47,7 @@
 					</tr>
 				</table>
 				<input type="button" value="Salvar" class="Botao1" onclick="validarProduto()">
+				<a href="${pageContext.request.contextPath}/<%=PRProduto.NM_SERVLET_EXIBIR_PRODUTOS%>" class="BotaoLimpar">Voltar</a>
 			</form>
 		</div>
 	</div>

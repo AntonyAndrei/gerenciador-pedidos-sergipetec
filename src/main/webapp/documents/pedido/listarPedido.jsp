@@ -54,6 +54,7 @@
 
         <div class="rodape-formulario">
 			<a href="${pageContext.request.contextPath}/<%=PRPedido.NM_SERVLET_EXIBIR_INCLUIR%>" class="Botao1">Novo Pedido</a>
+			<a href="${pageContext.request.contextPath}/documents/index.jsp" class="BotaoLimpar">Voltar</a>
         </div>
     </div>
 </div>

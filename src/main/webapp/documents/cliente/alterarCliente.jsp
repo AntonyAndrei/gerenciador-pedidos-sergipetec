@@ -42,6 +42,7 @@
 					</tr>
 				</table>
 				<input type="submit" value="Salvar" class="Botao1" onclick="validarCliente()">
+				<a href="${pageContext.request.contextPath}/<%=PRCliente.NM_SERVLET_EXIBIR_CLIENTES%>" class="BotaoLimpar">Voltar</a>
 			</form>
 		</div>
 	</div>

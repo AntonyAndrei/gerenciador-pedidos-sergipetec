@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import beans.ItemPedidoBean;
 import beans.PedidoBean;
 import beans.ProdutoBean;
 
@@ -38,7 +39,13 @@ public class PedidoDAO extends DAO {
     public void incluirPedido(PedidoBean pPedido, String[] pIdsProdutos, String[] pQuantidades, String[] pDescontos) {
         final String sqlPedido  = "INSERT INTO pedidos (" + PedidoBean.NM_COL_IdCliente + ", " 
                                 + PedidoBean.NM_COL_DtPedido + ") VALUES (?,?)";
-        final String sqlItens   = "INSERT INTO itens_pedido (idPedido, idProduto, valorUnitario, quantidade, desconto) VALUES (?,?,?,?,?)";
+        final String sqlItens   = "INSERT INTO itens_pedido (" 
+				                + ItemPedidoBean.NM_COL_IdPedido + ", " 
+				                + ItemPedidoBean.NM_COL_IdProduto + ", " 
+				                + ItemPedidoBean.NM_COL_ValorUnitario + ", " 
+				                + ItemPedidoBean.NM_COL_Quantidade + ", " 
+				                + ItemPedidoBean.NM_COL_Desconto + ") VALUES (?,?,?,?,?)";
+        
         final String sqlEstoque = "UPDATE produtos SET " 
                                 + ProdutoBean.NM_COL_QuantidadeEstoque + " = " 
                                 + ProdutoBean.NM_COL_QuantidadeEstoque + " - ? WHERE " 

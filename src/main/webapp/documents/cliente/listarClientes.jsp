@@ -52,6 +52,7 @@
 		</table>
 		<div style="margin-top: 30px;">
 			<a href="${pageContext.request.contextPath}/<%=PRCliente.NM_JSP_INCLUIR%>" class="Botao1">Incluir Cliente</a>
+			<a href="${pageContext.request.contextPath}/documents/index.jsp" class="BotaoLimpar">Voltar</a>
 		</div>
 	</div>
 </div>

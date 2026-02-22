@@ -72,6 +72,7 @@
             <div class="rodape-formulario">
                 <input type="submit" value="Finalizar Pedido" class="Botao1">
                 <a href="<%=PRPedido.NM_SERVLET_EXIBIR_INCLUIR%>" class="BotaoExcluir">Cancelar</a>
+                <a href="<%=PRPedido.NM_SERVLET_EXIBIR_PEDIDOS%>" class="BotaoLimpar">Voltar</a>
             </div>
         </form>
     </div>
