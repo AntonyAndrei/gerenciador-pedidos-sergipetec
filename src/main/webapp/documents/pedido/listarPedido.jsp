@@ -45,6 +45,7 @@
                         <td><%=pedido.getDtPedido()%></td>
                         <td>
                             <a href="#" onclick="confirmarExclusaoPedido(<%=pedido.getIdPedido()%>)" class="BotaoExcluir">Excluir</a>
+                        	<a href="<%=PRPedido.NM_SERVLET_DETALHAR_PEDIDO%>?<%=PedidoBean.NM_COL_IdPedido%>=<%=pedido.getIdPedido()%>" class="Botao1">Detalhar</a>
                         </td>
                     </tr>
                 <%  } 
@@ -60,11 +61,9 @@
 </div>
     
 <script>
-/** Função de confirmação de exclusão **/
 function confirmarExclusaoPedido(pIdPedido) {
     let resposta = confirm("Deseja realmente excluir este pedido?");
     if (resposta === true) {
-        // Redireciona usando a constante da PR e a coluna do Bean para o ID
         window.location.href = "<%=PRPedido.NM_SERVLET_EXCLUIR_PEDIDO%>?<%=PedidoBean.NM_COL_IdPedido%>=" + pIdPedido;
     }
 }

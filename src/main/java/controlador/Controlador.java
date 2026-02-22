@@ -30,7 +30,9 @@ import processadorRequisicao.PRPedido;
 		// **************** SERVLETS PEDIDOS ***********************/
 		"/" + PRPedido.NM_SERVLET_EXIBIR_PEDIDOS,
 		"/" + PRPedido.NM_SERVLET_INCLUIR_PEDIDO,
-	    "/" + PRPedido.NM_SERVLET_EXIBIR_INCLUIR
+	    "/" + PRPedido.NM_SERVLET_EXIBIR_INCLUIR,
+	    "/" + PRPedido.NM_SERVLET_EXCLUIR_PEDIDO,
+	    "/" + PRPedido.NM_SERVLET_DETALHAR_PEDIDO
 		})
 public class Controlador extends HttpServlet {
 	/**
@@ -117,6 +119,14 @@ public class Controlador extends HttpServlet {
 		
 		if (action.equals("/" + PRPedido.NM_SERVLET_EXIBIR_INCLUIR)) {
 		    aPRPedido.exibirIncluir(request, response);
+		}
+		
+		if (action.equals("/" + PRPedido.NM_SERVLET_EXCLUIR_PEDIDO)) {
+		    aPRPedido.processarExcluirPedido(request, response);
+		}
+		
+		if (action.equals("/" + PRPedido.NM_SERVLET_DETALHAR_PEDIDO)) {
+		    aPRPedido.exibirDetalhamento(request, response);
 		}
 	}
 }
