@@ -118,3 +118,28 @@ h1 {
 .Botao1, .BotaoExcluir {
     margin: 2px;
 }
+
+.linha-produto { 
+	border-bottom: 1px solid #ccc; 
+	padding: 10px 0; 
+}
+
+.remover-item { 
+	color: red; 
+	cursor: pointer; 
+	font-weight: bold; 
+}
+
+.secao-botoes-acao {
+    margin-top: 15px;
+}
+
+.BotaoVerde {
+    background-color: #28a745 !important;
+}
+
+.rodape-formulario {
+    margin-top: 30px; 
+    border-top: 2px solid #000; 
+    padding-top: 10px;
+}

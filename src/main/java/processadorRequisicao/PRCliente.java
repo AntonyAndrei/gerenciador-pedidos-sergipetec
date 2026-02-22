@@ -76,7 +76,7 @@ public class PRCliente {
 		ClienteBean cliente = new ClienteBean(idCliente, nomeCliente, emailCliente, dtInclusaoCliente);
 		// chama o DAO para mandar alterar ao BD
 		clienteDAO.alterarCliente(cliente);
-		// redireciona para o documento gerenciadorPedidos.jsp
+		// redireciona para o documento listarClientes.jsp
 		response.sendRedirect(NM_SERVLET_EXIBIR_CLIENTES);
 	}
 	
@@ -85,7 +85,7 @@ public class PRCliente {
 		ClienteBean cliente = new ClienteBean(request.getParameter(ClienteBean.NM_COL_IdCliente));
 		// chama o DAO para mandar excluir do BD
 		clienteDAO.excluirCliente(cliente);
-		// redireciona para o documento gerenciadorPedidos.jsp
+		// redireciona para o documento listarClientes.jsp
 		response.sendRedirect(NM_SERVLET_EXIBIR_CLIENTES);
 	}
 	

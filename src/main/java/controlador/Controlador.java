@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import processadorRequisicao.PRCliente;
 import processadorRequisicao.PRProduto;
+import processadorRequisicao.PRPedido;
 
 @WebServlet(urlPatterns = {
 		"/Controlador",
@@ -25,7 +26,11 @@ import processadorRequisicao.PRProduto;
 		"/" + PRProduto.NM_SERVLET_ALTERAR_PRODUTOS,
 		"/" + PRProduto.NM_SERVLET_PROCESSAR_ATUALIZAR_PRODUTO,
 		"/" + PRProduto.NM_SERVLET_EXCLUIR_PRODUTO,
-		"/" + PRProduto.NM_SERVLET_CONSULTAR_PRODUTO_PARAMETRO
+		"/" + PRProduto.NM_SERVLET_CONSULTAR_PRODUTO_PARAMETRO,
+		// **************** SERVLETS PEDIDOS ***********************/
+		"/" + PRPedido.NM_SERVLET_EXIBIR_PEDIDOS,
+		"/" + PRPedido.NM_SERVLET_INCLUIR_PEDIDO,
+	    "/" + PRPedido.NM_SERVLET_EXIBIR_INCLUIR
 		})
 public class Controlador extends HttpServlet {
 	/**
@@ -39,8 +44,17 @@ public class Controlador extends HttpServlet {
     
     PRCliente aPRCliente = new PRCliente();
     PRProduto aPRProduto = new PRProduto();
+    PRPedido aPRPedido   = new PRPedido();
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processarRequisicao(request, response);
+    }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processarRequisicao(request, response);
+    }
+
+	protected void processarRequisicao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getServletPath();
 		// **************** SERVLETS CLIENTES ***********************/
 		if (action.equals("/" + PRCliente.NM_SERVLET_EXIBIR_CLIENTES)) {
@@ -90,6 +104,19 @@ public class Controlador extends HttpServlet {
 		
 		if (action.equals("/" + PRProduto.NM_SERVLET_CONSULTAR_PRODUTO_PARAMETRO)) {
 			aPRProduto.consultarProdutoParametro(request, response);
+		}
+		
+		// **************** SERVLETS PEDIDOS ***********************/
+		if (action.equals("/" + PRPedido.NM_SERVLET_EXIBIR_PEDIDOS)) {
+			aPRPedido.exibirPedidos(request, response);
+		}
+		
+		if (action.equals("/" + PRPedido.NM_SERVLET_INCLUIR_PEDIDO)) {
+			aPRPedido.incluirPedido(request, response);
+		}
+		
+		if (action.equals("/" + PRPedido.NM_SERVLET_EXIBIR_INCLUIR)) {
+		    aPRPedido.exibirIncluir(request, response);
 		}
 	}
 }

@@ -1,5 +1,6 @@
 <%@page import="processadorRequisicao.PRProduto"%>
 <%@ page import="processadorRequisicao.PRCliente"%>
+<%@page import="processadorRequisicao.PRPedido"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
 			<h1>Gerenciador de Pedidos</h1>
 			<a href="${pageContext.request.contextPath}/<%=PRCliente.NM_SERVLET_EXIBIR_CLIENTES%>" class="Botao1">Exibir Clientes</a>
 			<a href="${pageContext.request.contextPath}/<%=PRProduto.NM_SERVLET_EXIBIR_PRODUTOS%>" class="Botao1">Exibir Produtos</a>
-			<a class="Botao1">Exibir Pedidos</a>
+			<a href="${pageContext.request.contextPath}/<%=PRPedido.NM_SERVLET_EXIBIR_PEDIDOS%>"   class="Botao1">Exibir Pedidos</a>		
 		</div>
 	</div>
 </body>
