@@ -49,4 +49,9 @@ Execute os scripts do arquivo abaixo seu MySQL Workbench para criar as tabelas n
 [CREATE TABLES.sql](https://github.com/user-attachments/files/25532486/CREATE.TABLES.sql)
 
 ---
+
+## Como rodar a Aplicação
+* Após toda configuração de ambiente executada, inicialize o servidor TomCat no Eclipse.
+* Para acessar a interface web interativa acesse: http://localhost:8080/GerenciadorPedidos/documents
+
 **Desenvolvido por:** Antony Andrei de Souza Santos
