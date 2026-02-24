@@ -21,6 +21,7 @@ public class PRPedido {
     public static final String NM_SERVLET_EXIBIR_INCLUIR  = "exibirIncluir";
     public static final String NM_SERVLET_EXCLUIR_PEDIDO  = "excluirPedido";
     public static final String NM_SERVLET_DETALHAR_PEDIDO = "detalharPedido";
+    public static final String NM_SERVLET_CONSULTAR_PEDIDO_PARAMETRO = "consultarPedidoParametro";
 
     public static final String NM_ARRAY_PEDIDO                      = "listaPedidos";
     public static final String NM_ARRAY_IDS_PRODUTOS_PEDIDO         = "idProdutos[]";
@@ -30,6 +31,8 @@ public class PRPedido {
 
     public static final String NM_ATR_PEDIDO_DETALHE     = "atribPedidoDetalhe";
     public static final String NM_ATR_LISTA_ITENS        = "atribListaItensDetalhe";
+    public static final String NM_ATR_FILTRO_DT_INICIO   = "filtroDataInicio";
+    public static final String NM_ATR_FILTRO_DT_FIM      = "filtroDataFim";
     
     public static String NM_JSP_LISTAR         = "/documents/pedido/listarPedido.jsp";
     public static String NM_JSP_NOVO           = "/documents/pedido/novoPedido.jsp";
@@ -39,10 +42,15 @@ public class PRPedido {
     ProdutoDAO produtoDAO = new ProdutoDAO();
 
     public void exibirPedidos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ArrayList<PedidoBean> lista = pedidoDAO.consultarPedidos();
-        request.setAttribute(NM_ARRAY_PEDIDO, lista);
-        request.getRequestDispatcher(NM_JSP_LISTAR).forward(request, response);
-    }
+		ArrayList<PedidoBean> lista = pedidoDAO.consultarPedidos();
+		
+		// Busca listas para os selects de filtro
+		request.setAttribute(PRCliente.NM_ARRAY_CLIENTE, new ClienteDAO().consultarCliente());
+		request.setAttribute(PRProduto.NM_ARRAY_PRODUTO, new ProdutoDAO().consultarProduto());
+		
+		request.setAttribute(NM_ARRAY_PEDIDO, lista);
+		request.getRequestDispatcher(NM_JSP_LISTAR).forward(request, response);
+	}
 
     public void incluirPedido(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Obtem id do cliente
@@ -100,4 +108,50 @@ public class PRPedido {
         
         request.getRequestDispatcher(NM_JSP_DETALHAR).forward(request, response);
     }
+    
+	public void consultarPedidoParametro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String idPedidoStr  = request.getParameter(PedidoBean.NM_COL_IdPedido);
+		String idClienteStr = request.getParameter(PedidoBean.NM_COL_IdCliente);
+		String idProdutoStr = request.getParameter(ProdutoBean.NM_COL_IdProduto);
+		String dtInicioStr  = request.getParameter(NM_ATR_FILTRO_DT_INICIO);
+		String dtFimStr     = request.getParameter(NM_ATR_FILTRO_DT_FIM);
+		
+		ArrayList<PedidoBean> listaPedidos = null;
+
+		// Verifica se o filtro de cliente foi preenchido
+		if (idClienteStr != null && !idClienteStr.isEmpty()) {
+			int idCliente = Integer.parseInt(idClienteStr);
+			listaPedidos = pedidoDAO.consultarPedidosPorCliente(idCliente);
+		}
+		
+		// Verifica se o filtro de produto foi preenchido
+		if (idProdutoStr != null && !idProdutoStr.isEmpty()) {
+			int idProduto = Integer.parseInt(idProdutoStr);
+			listaPedidos = pedidoDAO.consultarPedidosPorProduto(idProduto);
+		}
+		
+		// Verifica se o filtro de pedido foi preenchido
+		if (idPedidoStr != null && !idPedidoStr.isEmpty()) {
+			listaPedidos = pedidoDAO.consultarPedidosPorId(Integer.parseInt(idPedidoStr));
+		}
+		
+		// Verifica se o filtro de data foi preenchido
+		if (dtInicioStr != null && !dtInicioStr.isEmpty() && dtFimStr != null && !dtFimStr.isEmpty()) {
+			LocalDate dtInicio = LocalDate.parse(dtInicioStr);
+			LocalDate dtFim = LocalDate.parse(dtFimStr);
+			listaPedidos = pedidoDAO.consultarPedidosPorPeriodo(dtInicio, dtFim);
+		}
+		
+		// Busca as listas completas para manter os selects da JSP populares
+		ArrayList<ClienteBean> listaClientes = new ClienteDAO().consultarCliente();
+		ArrayList<ProdutoBean> listaProdutos = new ProdutoDAO().consultarProduto();
+		
+		// Envia as listas para a JSP
+		request.setAttribute(NM_ARRAY_PEDIDO, listaPedidos);
+		request.setAttribute(PRCliente.NM_ARRAY_CLIENTE, listaClientes);
+		request.setAttribute(PRProduto.NM_ARRAY_PRODUTO, listaProdutos);
+		
+		request.getRequestDispatcher(NM_JSP_LISTAR).forward(request, response);
+	}
+	
 }

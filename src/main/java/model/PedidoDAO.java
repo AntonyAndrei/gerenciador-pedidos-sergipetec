@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import beans.BeanGenerico;
@@ -217,4 +218,107 @@ public class PedidoDAO extends DAO {
         // retorna a lista
         return listaItensGenericos;
     }
+    
+    /** CONSULTAR PEDIDOS POR ID **/
+	public ArrayList<PedidoBean> consultarPedidosPorId(int pIdPedido) {
+		final String sql = "SELECT * FROM pedidos WHERE " + PedidoBean.NM_COL_IdPedido + " = ?";
+		ArrayList<PedidoBean> lista = new ArrayList<>();
+		try {
+			// Abre conexão com o banco
+			Connection conexao = conectar();
+			// Prepara a query para execução no BD
+			PreparedStatement preStmt = conexao.prepareStatement(sql);
+			// Substitui parâmetros "?"
+			preStmt.setInt(1, pIdPedido);
+			// Executa a query e armazena o resultado 
+			ResultSet rs = preStmt.executeQuery();
+			// laço While executado enquanto houver pedidos para converter os dados num objeto e coloca-los na lista
+			while (rs.next()) {
+				lista.add(new PedidoBean(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate()));
+			}
+			// encerra conexão com o BD
+			conexao.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return lista;
+	}
+
+	/** CONSULTAR PEDIDOS POR PERÍODO DE DATA **/
+	public ArrayList<PedidoBean> consultarPedidosPorPeriodo(LocalDate pDataInicio, LocalDate pDataFim) {
+		final String sql = "SELECT * FROM pedidos WHERE " + PedidoBean.NM_COL_DtPedido + " BETWEEN ? AND ? ORDER BY " + PedidoBean.NM_COL_DtPedido + " ASC";
+		ArrayList<PedidoBean> lista = new ArrayList<>();
+		try {
+			// Abre conexão com o banco
+			Connection conexao = conectar();
+			// Prepara a query para execução no BD
+			PreparedStatement preStmt = conexao.prepareStatement(sql);
+			// Substitui parâmetros "?"
+			preStmt.setDate(1, java.sql.Date.valueOf(pDataInicio));
+			preStmt.setDate(2, java.sql.Date.valueOf(pDataFim));
+			// Executa a query e armazena o resultado 
+			ResultSet rs = preStmt.executeQuery();
+			// laço While executado enquanto houver pedidos para converter os dados num objeto e coloca-los na lista
+			while (rs.next()) {
+				lista.add(new PedidoBean(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate()));
+			}
+			// encerra conexão com o BD
+			conexao.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return lista;
+	}
+    
+    /** CONSULTAR PEDIDOS POR ID DO CLIENTE **/
+	public ArrayList<PedidoBean> consultarPedidosPorCliente(int pIdCliente) {
+		final String sql = "SELECT * FROM pedidos WHERE " + PedidoBean.NM_COL_IdCliente + " = ? ORDER BY " + PedidoBean.NM_COL_DtPedido + " DESC";
+		ArrayList<PedidoBean> lista = new ArrayList<>();
+		try {
+			// Abre conexão com o banco
+			Connection conexao = conectar();
+			// Prepara a query para execução no BD
+			PreparedStatement preStmt = conexao.prepareStatement(sql);
+			// Substitui parâmetros "?"
+			preStmt.setInt(1, pIdCliente);
+			// Executa a query e armazena o resultado 
+			ResultSet rs = preStmt.executeQuery();
+			// laço While executado enquanto houver pedidos para converter os dados num objeto e coloca-los na lista
+			while (rs.next()) {
+				lista.add(new PedidoBean(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate()));
+			}
+			// encerra conexão com o BD
+			conexao.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return lista;
+	}
+
+	/** CONSULTAR PEDIDOS POR ID DO PRODUTO **/
+	public ArrayList<PedidoBean> consultarPedidosPorProduto(int pIdProduto) {
+		final String sql = "SELECT DISTINCT pedidos.* FROM pedidos INNER JOIN itens_pedido itens ON pedidos." + PedidoBean.NM_COL_IdPedido + 
+						   " = itens." + ItemPedidoBean.NM_COL_IdPedido + " WHERE itens." + ItemPedidoBean.NM_COL_IdProduto + 
+						   " = ? ORDER BY pedidos." + PedidoBean.NM_COL_DtPedido + " DESC";
+		ArrayList<PedidoBean> lista = new ArrayList<>();
+		try {
+			// Abre conexão com o banco
+			Connection conexao = conectar();
+			// Prepara a query para execução no BD
+			PreparedStatement preStmt = conexao.prepareStatement(sql);
+			// Substitui parâmetros "?"
+			preStmt.setInt(1, pIdProduto);
+			// Executa a query e armazena o resultado 
+			ResultSet rs = preStmt.executeQuery();
+			// laço While executado enquanto houver pedidos para converter os dados num objeto e coloca-los na lista
+			while (rs.next()) {
+				lista.add(new PedidoBean(rs.getInt(1), rs.getInt(2), rs.getDate(3).toLocalDate()));
+			}
+			// encerra conexão com o BD
+			conexao.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return lista;
+	}
 }

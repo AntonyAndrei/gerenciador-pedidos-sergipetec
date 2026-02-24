@@ -143,3 +143,26 @@ h1 {
     border-top: 2px solid #000; 
     padding-top: 10px;
 }
+
+.secao-filtros {
+    margin: 20px auto;
+    width: fit-content; 
+    text-align: left;
+}
+
+.filtro-form {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.filtro-form label {
+    font-weight: bold;
+    color: #4682B4;
+    min-width: 120px;
+}
+
+.filtro-form select {
+    width: 350px; 
+}
