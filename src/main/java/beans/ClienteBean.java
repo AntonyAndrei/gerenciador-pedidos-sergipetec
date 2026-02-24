@@ -13,6 +13,9 @@ public class ClienteBean {
 	public static String NM_COL_Email      = "email";
 	public static String NM_COL_DtCadastro = "dt_cadastro";
 	
+	public static String NM_COL_Generica_Qnt_Pedidos  = "qtd_pedidos";
+	public static String NM_COL_Generica_Valor_total  = "valor_total";
+	
 	public static String NM_ENTIDADE       = "ClienteBean";
 	
 	public ClienteBean() {

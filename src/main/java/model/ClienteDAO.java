@@ -6,7 +6,10 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import beans.BeanGenerico;
 import beans.ClienteBean;
+import beans.ItemPedidoBean;
+import beans.PedidoBean;
 
 public class ClienteDAO extends DAO {
 	/********************************** CRUD CLIENTE ******************************************/
@@ -170,5 +173,43 @@ public class ClienteDAO extends DAO {
 			System.out.println(e);
 			return null;
 		}
+	}
+	
+	/** CONSULTAR CLIENTES COM JOIN **/
+	public ArrayList<BeanGenerico> consultarClientesGenerico() {
+		final String sql = "SELECT clientes.*, " + " (SELECT COUNT(*) FROM pedidos WHERE pedidos."
+				+ PedidoBean.NM_COL_IdCliente + " = clientes." + ClienteBean.NM_COL_IdCliente + ") as qtd_pedidos, "
+				+ " (SELECT SUM((itens_pedido." + ItemPedidoBean.NM_COL_ValorUnitario + " * itens_pedido."
+				+ ItemPedidoBean.NM_COL_Quantidade + ") - itens_pedido." + ItemPedidoBean.NM_COL_Desconto + ") "
+				+ "  FROM itens_pedido INNER JOIN pedidos ON itens_pedido." + ItemPedidoBean.NM_COL_IdPedido
+				+ " = pedidos." + PedidoBean.NM_COL_IdPedido + " " + "  WHERE pedidos." + PedidoBean.NM_COL_IdCliente
+				+ " = clientes." + ClienteBean.NM_COL_IdCliente + ") as valor_total "
+				+ " FROM clientes ORDER BY clientes." + ClienteBean.NM_COL_Nome;
+		
+		ArrayList<BeanGenerico> lista = new ArrayList<>();
+		try {
+			// Abre conexão com o banco
+			Connection conexao = conectar();
+			// Prepara a query para execução no BD
+			PreparedStatement preStmt = conexao.prepareStatement(sql);
+			// Executa a query e armazena o resultado 
+			ResultSet rs = preStmt.executeQuery();
+			// laço While para converter os dados no BeanGenerico
+			while (rs.next()) {
+				BeanGenerico clienteGenerico = new BeanGenerico();
+				clienteGenerico.setAtribute(ClienteBean.NM_COL_IdCliente, rs.getString(1));
+				clienteGenerico.setAtribute(ClienteBean.NM_COL_Nome, rs.getString(2));
+				clienteGenerico.setAtribute(ClienteBean.NM_COL_Email, rs.getString(3));
+				clienteGenerico.setAtribute(ClienteBean.NM_COL_DtCadastro, rs.getDate(4).toLocalDate());
+				clienteGenerico.setAtribute(ClienteBean.NM_COL_Generica_Qnt_Pedidos, rs.getInt(5));
+				clienteGenerico.setAtribute(ClienteBean.NM_COL_Generica_Valor_total, rs.getDouble(6));
+				lista.add(clienteGenerico);
+			}
+			// encerra conexão com o BD
+			conexao.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return lista;
 	}
 }

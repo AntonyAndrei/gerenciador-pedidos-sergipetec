@@ -1,3 +1,4 @@
+<%@page import="beans.BeanGenerico"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="beans.ClienteBean"%>
@@ -5,7 +6,7 @@
 <%@ page import="processadorRequisicao.PRCliente"%>
 
 <%
-	ArrayList<ClienteBean> listaClientes = (ArrayList<ClienteBean>) request.getAttribute(PRCliente.NM_ARRAY_CLIENTE);
+	ArrayList<BeanGenerico> listaClientes = (ArrayList<BeanGenerico>) request.getAttribute(PRCliente.NM_ARRAY_CLIENTE);
 %>
 
 <!DOCTYPE html>
@@ -26,29 +27,38 @@
 			<a href="<%=PRCliente.NM_SERVLET_EXIBIR_CLIENTES%>" class="BotaoLimpar">Limpar</a>
 		</form>
 		<table id="tabela">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Nome</th>
-					<th>E-mail</th>
-					<th>Data de Cadastro</th>
-					<th>Opções</th>				
-				</tr>
-			</thead>
-			<tbody>
-				<%for (ClienteBean cliente : listaClientes){ %>
-					<tr>
-						<td><%=cliente.getIdCliente()%></td>
-						<td><%=cliente.getNome()%></td>
-						<td><%=cliente.getEmail()%></td>
-						<td><%=cliente.getDtCadastro()%></td>
-						<td>
-							<a href="<%=PRCliente.NM_SERVLET_ALTERAR_CLIENTES%>?<%=ClienteBean.NM_COL_IdCliente%>=<%=cliente.getIdCliente()%>" class="Botao1">Alterar</a>
-							<a href="#" onclick="confirmarExclusaoCliente(<%=cliente.getIdCliente()%>)" class="BotaoExcluir">Excluir</a>
-						</td>
-					</tr>
-				<%} %>
-			</tbody>
+		    <thead>
+		        <tr>
+		            <th>Id</th>
+		            <th>Nome</th>
+		            <th>E-mail</th>
+		            <th>Data de Cadastro</th>
+		            <th>Qtd. Pedidos</th>
+		            <th>Total Comprado</th>
+		            <th>Opções</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <%
+		        if(listaClientes != null) {
+		            for (BeanGenerico cliente : listaClientes) {
+		                double total = (cliente.getAtribute(ClienteBean.NM_COL_Generica_Valor_total) != null) ? (double)cliente.getAtribute(ClienteBean.NM_COL_Generica_Valor_total) : 0.0;
+		        %>
+		            <tr>
+		                <td><%=cliente.getAtribute(ClienteBean.NM_COL_IdCliente)%></td>
+		                <td><%=cliente.getAtribute(ClienteBean.NM_COL_Nome)%></td>
+		                <td><%=cliente.getAtribute(ClienteBean.NM_COL_Email)%></td>
+		                <td><%=cliente.getAtribute(ClienteBean.NM_COL_DtCadastro)%></td>
+		                <td><%=cliente.getAtribute(ClienteBean.NM_COL_Generica_Qnt_Pedidos)%></td>
+		                <td>R$ <%= String.format("%.2f", total) %></td>
+		                <td>
+		                    <a href="<%=PRCliente.NM_SERVLET_ALTERAR_CLIENTES%>?<%=ClienteBean.NM_COL_IdCliente%>=<%=cliente.getAtribute(ClienteBean.NM_COL_IdCliente)%>" class="Botao1">Alterar</a>
+		                    <a href="#" onclick="confirmarExclusaoCliente(<%=cliente.getAtribute(ClienteBean.NM_COL_IdCliente)%>)" class="BotaoExcluir">Excluir</a>
+		                </td>
+		            </tr>
+		        <%  }
+		        } %>
+		    </tbody>
 		</table>
 		<div style="margin-top: 30px;">
 			<a href="${pageContext.request.contextPath}/<%=PRCliente.NM_JSP_INCLUIR%>" class="Botao1">Incluir Cliente</a>

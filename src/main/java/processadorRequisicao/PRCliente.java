@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import beans.BeanGenerico;
 import beans.ClienteBean;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -34,7 +35,7 @@ public class PRCliente {
 	// *********************** MÉTODOS RELACIONADO AOS CLIENTES ***********************
 	public void exibirClientes(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// Criando o objeto que irá receber os dados do clientes
-		ArrayList<ClienteBean> listaClientes = clienteDAO.consultarCliente();
+		ArrayList<BeanGenerico> listaClientes = clienteDAO.consultarClientesGenerico();
 		// Encaminhar a lista ao documento listarClientes.jsp
 		request.setAttribute(NM_ARRAY_CLIENTE, listaClientes);
 		RequestDispatcher rd = request.getRequestDispatcher(NM_JSP_LISTAR);
